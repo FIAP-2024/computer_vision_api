@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 from PIL import Image, ImageOps
 import numpy as np
 from keras.models import load_model # Tensorflow 2.12.0
+from flask_cors import CORS
 
 np.set_printoptions(suppress=True)
 
@@ -12,6 +13,8 @@ def make_model():
     return model, class_names
 
 app = Flask(__name__)
+
+CORS(app, origins=["http://localhost:5173"])
 
 @app.route('/upload', methods=['POST'])
 def upload_image():
@@ -47,8 +50,8 @@ def upload_image():
         confidence_score = prediction[0][index]
 
         result_dict = {
-            "Classe": str(class_name[2:]).strip(),
-            "Probabilidade": str(confidence_score).strip()
+            "identifiedClass": str(class_name[2:]).strip(),
+            "confidence": str(confidence_score).strip()
         }
 
         return jsonify(result_dict)
