@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from PIL import Image, ImageOps
 import numpy as np
-from keras.models import load_model # Tensorflow 2.12.0
+from keras.models import load_model # Tensorflow 2.14.0
 from flask_cors import CORS
 
 np.set_printoptions(suppress=True)
@@ -14,7 +14,7 @@ def make_model():
 
 app = Flask(__name__)
 
-CORS(app, origins=["http://localhost:5173"])
+CORS(app)
 
 @app.route('/upload', methods=['POST'])
 def upload_image():
